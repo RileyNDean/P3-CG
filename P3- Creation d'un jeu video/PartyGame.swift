@@ -12,18 +12,12 @@ public class PartyGame {
     private var turn = 2 // Turn count, starts at 2 because will be divided by 2 to have the number of rounds
     private var allyteam: [Character]
     private var enemyteam: [Character]
-    private var player = 1 // Which player
+    private var player = 2 // Which player
     
     //MARK: Init
     init(allyteam: [Character], enemyteam: [Character]) {
         self.allyteam = allyteam
         self.enemyteam = enemyteam
-        if player == 1 {
-            player = 2
-        }
-        else {
-            player = 1
-        }
     }
     
     //Start the game
@@ -34,8 +28,13 @@ public class PartyGame {
     //Start round
     private func Startround() {
         turn += 1 //turn count
-        selectattacker() //start with select the character who attack or heal
-        
+        if player == 1 {
+            player = 2
+        }
+        else {
+            player = 1
+        }
+        selectattacker() //start with select the character who attack or heal 
     }
     
     //select charact who attack or heal
@@ -56,7 +55,7 @@ public class PartyGame {
             repeat {
                 if let choice = readLine() {
                     if let loop = Int(choice) {
-                    aorh = loop
+                        aorh = loop
                     }
                 }
             } while aorh != 1 && aorh != 2 //must choose between
@@ -87,7 +86,6 @@ public class PartyGame {
             print("\(defender.name) receive \(attacker.weapon.Dmg) from \(attacker.name)")
             defender.Hp -= attacker.weapon.Dmg //removal of life points according to damage
             print(" \(defender.name) has \(defender.Hp) Life points left 🩸 ")
-            enemyteam = updatecharact(team: enemyteam, charactup: defender)
             checkalldead() //check if all ennemy is dead
         }
         else { //if the character who the player want to attack is already dead
@@ -103,10 +101,9 @@ public class PartyGame {
         
         print("@@@======= Who do you want to heal 🔮 ? =======@@@")
         if cared.Hp > 0 {
-        print("\(cared.name) receive by \(healer.name) : \(healer.weapon.Heal) Life points ❤️‍🔥")
-        cared.Hp += healer.weapon.Heal //adding the Heal to the hp points
-        print("\(cared.name) has \(cared.Hp) Life points left..")
-            allyteam = updatecharact(team: allyteam, charactup: cared)
+            print("\(cared.name) receive by \(healer.name) : \(healer.weapon.Heal) Life points ❤️‍🔥")
+            cared.Hp += healer.weapon.Heal //adding the Heal to the hp points
+            print("\(cared.name) has \(cared.Hp) Life points left..")
             changeteam()
             Startround() //new round
         }
@@ -128,18 +125,6 @@ public class PartyGame {
         }
     }
     
-    
-    //Update Character in the team
-    private func updatecharact(team: [Character], charactup: Character) -> [Character] {
-        var teamup = team
-        team.enumerated().forEach { index, character in
-            if character.name == charactup.name { //Character have unique name, look the match and update
-                teamup[index] = charactup
-            }
-        }
-        return teamup
-    }
-    
     //Check if the character selected is alive
     private func charactalive(character: Character) {
         if character.Hp <= 0 { //If the character is dead, the player have to choose a another one
@@ -151,7 +136,6 @@ public class PartyGame {
             if LootChance <= 15 { //15% chance of getting an item
                 let chest = Chest(lucky: character)
                 character.weapon = chest.weapon
-                allyteam = updatecharact(team: allyteam, charactup: character)
             }
             action(attacker: character) //The character is now doing his action
         }

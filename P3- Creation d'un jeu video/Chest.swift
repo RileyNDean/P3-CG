@@ -32,12 +32,14 @@ public class Chest{
             print("☀️☀️☀️======= ✨By the grace of loot !✨ 🌟 You just received \(weaponloot.Name) 🌟 ! =======☀️☀️☀️")
             return weaponloot //if the character don't have the weapon, give him the new weapon
             
-        } else if race == "Halflin 🧝🏾" || race == "Goblin 👺" {
+        }
+        else if race == "Halflin 🧝🏾" || race == "Goblin 👺" {
             let loot = Int.random(in: 0...2)
             let weaponloot = ranger[loot]
             print("☀️☀️☀️======= ✨By the grace of loot !✨ 🌟 You just received \(weaponloot.Name) 🌟 ! =======☀️☀️☀️")
             return weaponloot
-        } else if race == "Drow 🧙🏿" || race == "Vampire 🧛🏼‍♀️" {
+        }
+        else if race == "Drow 🧙🏿" || race == "Vampire 🧛🏼‍♀️" {
             let loot = Int.random(in: 0...2)
             let weaponloot = mage[loot]
             print("☀️☀️☀️======= ✨By the grace of loot !✨ 🌟 You just received \(weaponloot.Name) 🌟 ! =======☀️☀️☀️")
